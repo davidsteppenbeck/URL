@@ -1,6 +1,6 @@
 # URL
 
-`URL` is a freestanding Swift macro that provides an unwrapped `Foundation URL` for the string literal argument.
+`#URL` is a freestanding Swift macro that provides an unwrapped `Foundation URL` for the string literal argument.
 The macro checks the validity of the literal and throws an error if it does not represent a valid `Foundation URL`.
 
 ## Usage
