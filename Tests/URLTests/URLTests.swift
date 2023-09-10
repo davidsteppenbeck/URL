@@ -7,19 +7,20 @@ import XCTest
 import URLMacros
 
 let testMacros: [String: Macro.Type] = [
-    "stringify": StringifyMacro.self,
+    "URL": URLMacro.self,
 ]
 #endif
 
 final class URLTests: XCTestCase {
-    func testMacro() throws {
+    func testURL() throws {
         #if canImport(URLMacros)
         assertMacroExpansion(
             """
-            #stringify(a + b)
+            #URL("https://www.apple.com/iphone")
             """,
-            expandedSource: """
-            (a + b, "a + b")
+            expandedSource:
+            """
+            URL(string: "https://www.apple.com/iphone")!
             """,
             macros: testMacros
         )
@@ -27,16 +28,42 @@ final class URLTests: XCTestCase {
         throw XCTSkip("macros are only supported when running tests for the host platform")
         #endif
     }
-
-    func testMacroWithStringLiteral() throws {
+    
+    func testURLWithNoArguments() throws {
         #if canImport(URLMacros)
         assertMacroExpansion(
-            #"""
-            #stringify("Hello, \(name)")
-            """#,
-            expandedSource: #"""
-            ("Hello, \(name)", #""Hello, \(name)""#)
-            """#,
+            """
+            #URL()
+            """,
+            expandedSource:
+            """
+            #URL()
+            """,
+            diagnostics: [
+                DiagnosticSpec(message: "The macro does not have any arguments", line: 1, column: 1),
+                DiagnosticSpec(message: "The macro does not have any arguments", line: 1, column: 1)
+            ],
+            macros: testMacros
+        )
+        #else
+        throw XCTSkip("macros are only supported when running tests for the host platform")
+        #endif
+    }
+    
+    func testURLWithInvalidStringLiteral() throws {
+        #if canImport(URLMacros)
+        assertMacroExpansion(
+            """
+            #URL(" https:// www.apple.com/ iphone")
+            """,
+            expandedSource:
+            """
+            #URL(" https:// www.apple.com/ iphone")
+            """,
+            diagnostics: [
+                DiagnosticSpec(message: "The string does not represent a valid URL", line: 1, column: 1),
+                DiagnosticSpec(message: "The string does not represent a valid URL", line: 1, column: 1)
+            ],
             macros: testMacros
         )
         #else

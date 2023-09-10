@@ -1,11 +1,14 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+import Foundation
 
-/// A macro that produces both a value and a string containing the
-/// source code that generated the value. For example,
+/// An freestanding macro that provides an unwrapped `Foundation URL` for the provided string literal.
+/// The macro checks the validity of the literal and throws an error if it does not represent a valid `URL`.
 ///
-///     #stringify(x + y)
+/// Creating a `URL` from a string literal like this
 ///
-/// produces a tuple `(x + y, "x + y")`.
+///     let url = #URL("https://www.apple.com")
+///
+/// results in the following code automatically
+///
+///     URL(string: "https://www.apple.com")!
 @freestanding(expression)
-public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "URLMacros", type: "StringifyMacro")
+public macro URL(_ str: String) -> URL = #externalMacro(module: "URLMacros", type: "URLMacro")
