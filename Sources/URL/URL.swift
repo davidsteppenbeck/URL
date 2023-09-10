@@ -1,7 +1,7 @@
 import Foundation
 
-/// An freestanding macro that provides an unwrapped `Foundation URL` for the provided string literal.
-/// The macro checks the validity of the literal and throws an error if it does not represent a valid `URL`.
+/// An freestanding macro that provides an unwrapped `Foundation URL` for the string literal argument.
+/// The macro checks the validity of the literal and throws an error if it does not represent a valid `Foundation URL`.
 ///
 /// Creating a `URL` from a string literal like this
 ///
