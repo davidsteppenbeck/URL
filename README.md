@@ -24,7 +24,7 @@ The package can be installed using [Swift Package Manager](https://swift.org/pac
 ## License
 
 EnumCasePropertyGenerator is available under the MIT license. See the LICENSE file for more info.
-                                                           
+
 ## Acknowledgements
-                                                           
+
 The `URL` macro example is described in detail in Antoine v.d. Lee's [blog post](https://www.avanderlee.com/swift/macros).
