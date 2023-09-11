@@ -12,6 +12,7 @@ let testMacros: [String: Macro.Type] = [
 #endif
 
 final class URLTests: XCTestCase {
+    
     func testURL() throws {
         #if canImport(URLMacros)
         assertMacroExpansion(
@@ -50,6 +51,29 @@ final class URLTests: XCTestCase {
         #endif
     }
     
+    func testURLWithNonStringLiteral() throws {
+        #if canImport(URLMacros)
+        assertMacroExpansion(
+            #"""
+            let str = "/iphone"
+            #URL("https://www.apple.com\(str)")
+            """#,
+            expandedSource:
+            #"""
+            let str = "/iphone"
+            #URL("https://www.apple.com\(str)")
+            """#,
+            diagnostics: [
+                DiagnosticSpec(message: "Argument must be a string literal", line: 2, column: 1),
+                DiagnosticSpec(message: "Argument must be a string literal", line: 2, column: 1)
+            ],
+            macros: testMacros
+        )
+        #else
+        throw XCTSkip("macros are only supported when running tests for the host platform")
+        #endif
+    }
+    
     func testURLWithInvalidStringLiteral() throws {
         #if canImport(URLMacros)
         assertMacroExpansion(
@@ -70,4 +94,5 @@ final class URLTests: XCTestCase {
         throw XCTSkip("macros are only supported when running tests for the host platform")
         #endif
     }
+    
 }

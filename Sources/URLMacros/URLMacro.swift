@@ -14,12 +14,11 @@ public struct URLMacro: ExpressionMacro {
             throw URLError.noArguments
         }
         
-        guard let stringLiteralExpr = argument.expression.as(StringLiteralExprSyntax.self) else {
+        guard let stringLiteralExpr = argument.expression.as(StringLiteralExprSyntax.self),
+              let segment = stringLiteralExpr.segments.first?.as(StringSegmentSyntax.self),
+              stringLiteralExpr.segments.count == 1
+        else {
             throw URLError.mustBeValidStringLiteral
-        }
-        
-        guard stringLiteralExpr.segments.count == 1, let segment = stringLiteralExpr.segments.first?.as(StringSegmentSyntax.self) else {
-            throw URLError.stringLiteralMustHaveOnlyOneSegment
         }
         
         let text = segment.content.text
@@ -36,7 +35,6 @@ public struct URLMacro: ExpressionMacro {
 enum URLError: Error, CustomStringConvertible {
     case noArguments
     case mustBeValidStringLiteral
-    case stringLiteralMustHaveOnlyOneSegment
     case invalid
     
     var description: String {
@@ -45,8 +43,6 @@ enum URLError: Error, CustomStringConvertible {
             return "The macro does not have any arguments"
         case .mustBeValidStringLiteral:
             return "Argument must be a string literal"
-        case .stringLiteralMustHaveOnlyOneSegment:
-            return "String literal must have only one segment"
         case .invalid:
             return "The string does not represent a valid URL"
         }
