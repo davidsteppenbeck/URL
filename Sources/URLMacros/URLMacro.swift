@@ -10,7 +10,7 @@ public struct URLMacro: ExpressionMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-        guard let argument = node.argumentList.first else {
+        guard let argument = node.arguments.first else {
             throw URLError.noArguments
         }
         

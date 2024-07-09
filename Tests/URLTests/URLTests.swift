@@ -41,7 +41,6 @@ final class URLTests: XCTestCase {
             #URL()
             """,
             diagnostics: [
-                DiagnosticSpec(message: "The macro does not have any arguments", line: 1, column: 1),
                 DiagnosticSpec(message: "The macro does not have any arguments", line: 1, column: 1)
             ],
             macros: testMacros
@@ -64,7 +63,6 @@ final class URLTests: XCTestCase {
             #URL("https://www.apple.com\(str)")
             """#,
             diagnostics: [
-                DiagnosticSpec(message: "Argument must be a string literal", line: 2, column: 1),
                 DiagnosticSpec(message: "Argument must be a string literal", line: 2, column: 1)
             ],
             macros: testMacros
@@ -85,7 +83,6 @@ final class URLTests: XCTestCase {
             #URL(" https:// www.apple.com/ iphone")
             """,
             diagnostics: [
-                DiagnosticSpec(message: "The string does not represent a valid URL", line: 1, column: 1),
                 DiagnosticSpec(message: "The string does not represent a valid URL", line: 1, column: 1)
             ],
             macros: testMacros
