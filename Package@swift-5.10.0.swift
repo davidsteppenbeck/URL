@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -20,7 +20,7 @@ let package = Package(
     ],
     dependencies: [
         // Depend on the latest Swift 5.10 release of SwiftSyntax
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "600.0.0-prerelease-2024-07-24"),
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "510.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
